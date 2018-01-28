@@ -1,0 +1,32 @@
+defaultTasks 'clean', 'build'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+version = '1.0-SNAPSHOT'
+group = 'com.paic.arch.interviews.jmsrefactor'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+idea.module {
+    downloadSources = true
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5',
+            'org.apache.activemq:activemq-core:5.7.0',
+            'org.springframework.boot:spring-boot-starter:1.5.9.RELEASE'
+
+    runtime 'ch.qos.logback:logback-classic:1.0.13'
+
+    testCompile 'junit:junit:4.11',
+            'org.mockito:mockito-core:1.9.5',
+            'org.assertj:assertj-core:1.6.1',
+            'org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE'
+}
