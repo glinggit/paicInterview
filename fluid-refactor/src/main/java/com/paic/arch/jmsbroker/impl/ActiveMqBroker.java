@@ -1,9 +1,5 @@
 package com.paic.arch.jmsbroker.impl;
 
-import java.util.Enumeration;
-
-import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
@@ -76,17 +72,17 @@ public class ActiveMqBroker implements IBrokerRunning, IBrokerCreate {
 
 	}
 
-	@Override
-	public IBrokerRunning sendATextMessageToDestinationAt(String aDestinationName, String aMessageToSend) {
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-		JmsUtils.executeCallbackAgainstRemoteBroker(brokerUrl, aDestinationName,connectionFactory, (aSession, aDestination) -> {
-			MessageProducer producer = aSession.createProducer(aDestination);
-			producer.send(aSession.createTextMessage(aMessageToSend));
-			producer.close();
-			return "";
-		});
-		return this;
-	}
+//	@Override
+//	public IBrokerRunning sendATextMessageToDestinationAt(String aDestinationName, String aMessageToSend) {
+//		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
+//		JmsUtils.executeCallbackAgainstRemoteBroker(brokerUrl, aDestinationName,connectionFactory, (aSession, aDestination) -> {
+//			MessageProducer producer = aSession.createProducer(aDestination);
+//			producer.send(aSession.createTextMessage(aMessageToSend));
+//			producer.close();
+//			return "";
+//		});
+//		return this;
+//	}
 
 	@Override
 	public String retrieveASingleMessageFromTheDestination(String aDestinationName) {
@@ -138,22 +134,22 @@ public class ActiveMqBroker implements IBrokerRunning, IBrokerCreate {
 		return brokerUrl;
 	}
 
-//	@Override
-//	public IBrokerRunning sendTheMessage(String inputMessage) {
-//		this.inputMessage = inputMessage;
-//		return this;
-//	}
-//
-//	@Override
-//	public IBrokerRunning to(String inputQueue) {
-//		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-//		JmsUtils.executeCallbackAgainstRemoteBroker(brokerUrl, inputQueue,connectionFactory, (aSession, aDestination) -> {
-//			MessageProducer producer = aSession.createProducer(aDestination);
-//			producer.send(aSession.createTextMessage(inputMessage));
-//			producer.close();
-//			return "";
-//		});
-//		return this;
-//	}
+	@Override
+	public IBrokerRunning sendTheMessage(String inputMessage) {
+		this.inputMessage = inputMessage;
+		return this;
+	}
+
+	@Override
+	public IBrokerRunning to(String inputQueue) {
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
+		JmsUtils.executeCallbackAgainstRemoteBroker(brokerUrl, inputQueue,connectionFactory, (aSession, aDestination) -> {
+			MessageProducer producer = aSession.createProducer(aDestination);
+			producer.send(aSession.createTextMessage(inputMessage));
+			producer.close();
+			return "";
+		});
+		return this;
+	}
 
 }

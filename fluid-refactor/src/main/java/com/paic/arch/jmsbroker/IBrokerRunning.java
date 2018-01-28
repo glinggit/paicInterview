@@ -2,7 +2,7 @@ package com.paic.arch.jmsbroker;
 
 public interface IBrokerRunning {
 	
-	public IBrokerRunning sendATextMessageToDestinationAt(String aDestinationName, String aMessageToSend);
+//	public IBrokerRunning sendATextMessageToDestinationAt(String aDestinationName, String aMessageToSend);
 	
 	public String retrieveASingleMessageFromTheDestination(String aDestinationName);
 	
@@ -16,8 +16,8 @@ public interface IBrokerRunning {
     
     public String getBrokerUrl();
     
-//    public IBrokerRunning sendTheMessage(String inputMessage);
-//    
-//    public IBrokerRunning to(String inputQueue);
+    public IBrokerRunning sendTheMessage(String inputMessage);
+    
+    public IBrokerRunning to(String inputQueue);
 
 }

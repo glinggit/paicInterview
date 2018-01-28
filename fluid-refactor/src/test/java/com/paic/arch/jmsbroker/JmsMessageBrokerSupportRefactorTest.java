@@ -31,7 +31,7 @@ public class JmsMessageBrokerSupportRefactorTest {
     @Test
     public void sendsMessagesToTheRunningBroker() throws Exception {
     	JmsMessageBrokerSupportRefactor.bindToActiveMqBrokerAt(REMOTE_BROKER_URL)
-                .andThen().sendATextMessageToDestinationAt(TEST_QUEUE, MESSAGE_CONTENT);
+                .andThen().sendTheMessage(MESSAGE_CONTENT).to(TEST_QUEUE);
         long messageCount = JMS_SUPPORT.getEnqueuedMessageCountAt(TEST_QUEUE);
         assertThat(messageCount).isEqualTo(1);
     }
@@ -39,7 +39,7 @@ public class JmsMessageBrokerSupportRefactorTest {
     @Test
     public void readsMessagesPreviouslyWrittenToAQueue() throws Exception {
         String receivedMessage = JmsMessageBrokerSupportRefactor.bindToActiveMqBrokerAt(REMOTE_BROKER_URL)
-                .sendATextMessageToDestinationAt(TEST_QUEUE, MESSAGE_CONTENT)
+        		.sendTheMessage(MESSAGE_CONTENT).to(TEST_QUEUE)
                 .andThen().retrieveASingleMessageFromTheDestination(TEST_QUEUE);
         assertThat(receivedMessage).isEqualTo(MESSAGE_CONTENT);
     }
